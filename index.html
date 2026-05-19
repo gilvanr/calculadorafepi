@@ -508,6 +508,93 @@
       letter-spacing: 0.04em;
     }
 
+    /* ─── Exame info banner ─── */
+    .info-banner {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 16px;
+      background: rgba(201, 168, 76, 0.07);
+      border: 0.5px solid rgba(201, 168, 76, 0.22);
+      border-radius: 10px;
+      margin-bottom: 26px;
+    }
+
+    .info-icon {
+      font-size: 15px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .info-text {
+      font-size: 12.5px;
+      color: rgba(240, 208, 128, 0.75);
+      line-height: 1.65;
+    }
+
+    .info-text strong {
+      color: var(--gold-light);
+      font-weight: 500;
+    }
+
+    /* ─── Divider line between inputs ─── */
+    .optional-sep {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 4px 0 22px;
+    }
+
+    .optional-sep::before, .optional-sep::after {
+      content: '';
+      flex: 1;
+      height: 0.5px;
+      background: rgba(255,255,255,0.07);
+    }
+
+    .optional-sep span {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: rgba(245,225,215,0.25);
+      text-transform: uppercase;
+    }
+
+    /* ─── Two-col nota final result ─── */
+    .result-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .result-mini {
+      padding: 16px;
+      background: rgba(0,0,0,0.2);
+      border: 0.5px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .result-mini-label {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(245,225,215,0.4);
+      margin-bottom: 6px;
+    }
+
+    .result-mini-val {
+      font-family: 'Fraunces', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .result-mini-val.highlight {
+      color: var(--gold-light);
+    }
+
     /* ─── Responsive ─── */
     @media (max-width: 520px) {
       body { padding: 40px 16px 60px; }
@@ -537,6 +624,7 @@
   <div class="tab-switcher" role="tablist">
     <button class="tab active" role="tab" onclick="switchTab('calcular')">Nota Necessária</button>
     <button class="tab" role="tab" onclick="switchTab('ver')">Ver Minha Média</button>
+    <button class="tab" role="tab" onclick="switchTab('exame')">Exame Final</button>
   </div>
 
   <div class="card">
@@ -648,6 +736,102 @@
       </div>
     </div>
 
+    <!-- ── Panel 3: exame final ── -->
+    <div class="panel" id="panel-exame">
+
+      <div class="info-banner">
+        <span class="info-icon">⚠</span>
+        <p class="info-text">
+          O Exame Final é para quem ficou com média entre
+          <strong>30 e 69,9 pontos</strong>.<br>
+          Nota Final mínima para aprovação: <strong>50 pontos</strong>.
+        </p>
+      </div>
+
+      <div class="input-row">
+        <label for="mf-exame">
+          Sua Média Final Bimestral (USE: VER MINHA MÉDIA)
+          <span class="label-tag">PESO 3</span>
+        </label>
+        <input
+          type="number"
+          id="mf-exame"
+          placeholder="30 – 69,9"
+          min="30" max="69.9" step="0.1"
+        >
+      </div>
+
+      <div class="optional-sep"><span>opcional — simule seu resultado</span></div>
+
+      <div class="input-row">
+        <label for="ne-exame">
+          Nota do Exame Final
+          <span class="label-tag">PESO 2</span>
+        </label>
+        <input
+          type="number"
+          id="ne-exame"
+          placeholder="0 – 100 (opcional)"
+          min="0" max="100" step="0.1"
+        >
+      </div>
+
+      <button class="btn-primary" onclick="calcExame()">
+        Calcular Exame Final
+      </button>
+
+      <div class="error-msg" id="err-exame"></div>
+
+      <div class="result-box" id="result-exame">
+
+        <!-- Sempre mostra: nota necessária -->
+        <div id="exame-necessario-block">
+          <p class="result-label">Nota mínima no exame para passar</p>
+          <div class="result-value" id="val-exame-nec">—</div>
+          <p class="result-unit">pontos no exame</p>
+          <div class="status-pill" id="pill-exame-nec" style="margin-bottom:20px">
+            <span class="dot"></span>
+            <span id="pill-text-exame-nec"></span>
+          </div>
+        </div>
+
+        <!-- Aparece quando nota do exame é inserida -->
+        <div id="exame-final-block" style="display:none">
+          <div style="height:0.5px;background:rgba(255,255,255,0.07);margin:4px 0 22px"></div>
+          <p class="result-label" style="margin-bottom:14px">Simulação com sua nota do exame</p>
+          <div class="result-cols">
+            <div class="result-mini">
+              <p class="result-mini-label">Nota do Exame</p>
+              <div class="result-mini-val" id="val-col-exame">—</div>
+            </div>
+            <div class="result-mini">
+              <p class="result-mini-label">Nota Final</p>
+              <div class="result-mini-val highlight" id="val-col-final">—</div>
+            </div>
+          </div>
+
+          <div class="progress-track">
+            <div class="progress-fill" id="progress-fill-exame" style="width:0%"></div>
+          </div>
+          <div class="progress-labels">
+            <span>0</span>
+            <span>Mínimo: 50</span>
+            <span>100</span>
+          </div>
+
+          <div style="margin-top:20px">
+            <div class="status-pill" id="pill-exame-final">
+              <span class="dot"></span>
+              <span id="pill-text-exame-final"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="formula-block" id="formula-exame" style="margin-top:20px"></div>
+
+      </div>
+    </div>
+
   </div>
 
   <footer class="footer">
@@ -656,23 +840,27 @@
       <div class="footer-dot"></div>
       <div class="footer-line"></div>
     </div>
-    <p>Média mínima para aprovação: <strong style="color:rgba(245,225,215,0.55)">70 pontos</strong></p>
+    <p>Média bimestral mínima: <strong style="color:rgba(245,225,215,0.55)">70 pts</strong> &nbsp;|&nbsp; Nota final mínima (exame): <strong style="color:rgba(245,225,215,0.55)">50 pts</strong></p>
   </footer>
 
   <script>
+    const TABS = ['calcular', 'ver', 'exame'];
+
     function switchTab(tab) {
       document.querySelectorAll('.tab').forEach((t, i) => {
-        t.classList.toggle('active', (i === 0 && tab === 'calcular') || (i === 1 && tab === 'ver'));
+        t.classList.toggle('active', TABS[i] === tab);
       });
-      document.getElementById('panel-calcular').classList.toggle('active', tab === 'calcular');
-      document.getElementById('panel-ver').classList.toggle('active', tab === 'ver');
+      TABS.forEach(id => {
+        document.getElementById('panel-' + id).classList.toggle('active', id === tab);
+      });
     }
 
-    function showError(id) {
+    function showError(id, msg) {
       const el = document.getElementById(id);
+      el.textContent = '⚠  ' + msg;
       el.style.display = 'block';
       clearTimeout(el._t);
-      el._t = setTimeout(() => el.style.display = 'none', 3500);
+      el._t = setTimeout(() => el.style.display = 'none', 3800);
     }
 
     function setPill(pillId, textId, type, text) {
@@ -681,47 +869,48 @@
       document.getElementById(textId).textContent = text;
     }
 
-    function calcNecessaria() {
-      const n1 = parseFloat(document.getElementById('n1-calc').value);
-      if (isNaN(n1) || n1 < 0 || n1 > 100) {
-        showError('err-calc');
-        return;
-      }
-
-      const meta   = 70;
-      const nota2  = ((meta * 5) - (n1 * 2)) / 3;
-      const nota2r = Math.round(nota2 * 10) / 10;
-
-      document.getElementById('val-calcular').textContent =
-        nota2 > 100 ? '∞' : nota2 <= 0 ? '0' : nota2r.toFixed(1);
-
-      if (nota2 > 100) {
-        setPill('pill-calcular', 'pill-text-calcular', 'danger', 'Aprovação impossível — nota acima de 100');
-      } else if (nota2 <= 0) {
-        setPill('pill-calcular', 'pill-text-calcular', 'ok', 'Aprovação já garantida!');
-      } else if (nota2 >= 80) {
-        setPill('pill-calcular', 'pill-text-calcular', 'warn', 'Atenção — nota exigida alta');
-      } else {
-        setPill('pill-calcular', 'pill-text-calcular', 'ok', 'Meta alcançável');
-      }
-
-      document.getElementById('formula-calcular').innerHTML =
-        `<strong>Fórmula:</strong>&nbsp; (N₁ × 2 + N₂ × 3) ÷ 5 = 70<br>` +
-        `<strong>Cálculo:</strong>&nbsp; ((70 × 5) − (${n1} × 2)) ÷ 3<br>` +
-        `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= <strong>${nota2 > 100 ? 'impossível' : nota2 <= 0 ? '≤ 0' : nota2r.toFixed(1)}</strong>`;
-
-      const box = document.getElementById('result-calcular');
+    function animateBox(id) {
+      const box = document.getElementById(id);
       box.style.display = 'block';
       box.style.animation = 'none';
       void box.offsetWidth;
       box.style.animation = 'rise 0.4s cubic-bezier(0.16, 1, 0.3, 1) both';
     }
 
+    /* ── Tab 1: Nota Necessária ── */
+    function calcNecessaria() {
+      const n1 = parseFloat(document.getElementById('n1-calc').value);
+      if (isNaN(n1) || n1 < 0 || n1 > 100) {
+        showError('err-calc', 'Digite uma nota válida entre 0 e 100.');
+        return;
+      }
+
+      const meta  = 70;
+      const nota2 = ((meta * 5) - (n1 * 2)) / 3;
+      const n2r   = Math.round(nota2 * 10) / 10;
+
+      document.getElementById('val-calcular').textContent =
+        nota2 > 100 ? '∞' : nota2 <= 0 ? '0' : n2r.toFixed(1);
+
+      if (nota2 > 100)      setPill('pill-calcular','pill-text-calcular','danger','Aprovação impossível — nota acima de 100');
+      else if (nota2 <= 0)  setPill('pill-calcular','pill-text-calcular','ok','Aprovação já garantida!');
+      else if (nota2 >= 80) setPill('pill-calcular','pill-text-calcular','warn','Atenção — nota exigida alta');
+      else                  setPill('pill-calcular','pill-text-calcular','ok','Meta alcançável');
+
+      document.getElementById('formula-calcular').innerHTML =
+        `<strong>Fórmula:</strong>&nbsp; (N₁ × 2 + N₂ × 3) ÷ 5 = 70<br>` +
+        `<strong>Cálculo:</strong>&nbsp; ((70 × 5) − (${n1} × 2)) ÷ 3<br>` +
+        `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= <strong>${nota2 > 100 ? 'impossível' : nota2 <= 0 ? '≤ 0' : n2r.toFixed(1)}</strong>`;
+
+      animateBox('result-calcular');
+    }
+
+    /* ── Tab 2: Ver Minha Média ── */
     function calcMedia() {
       const n1 = parseFloat(document.getElementById('n1-ver').value);
       const n2 = parseFloat(document.getElementById('n2-ver').value);
-      if (isNaN(n1) || n1 < 0 || n1 > 100 || isNaN(n2) || n2 < 0 || n2 > 100) {
-        showError('err-ver');
+      if (isNaN(n1)||n1<0||n1>100||isNaN(n2)||n2<0||n2>100) {
+        showError('err-ver', 'Preencha as duas notas corretamente (0 – 100).');
         return;
       }
 
@@ -730,43 +919,106 @@
 
       document.getElementById('val-ver').textContent = mediar.toFixed(1);
 
-      const pct = Math.min(100, Math.max(0, media));
-      const fill = document.getElementById('progress-fill');
-
+      const fill  = document.getElementById('progress-fill');
       let color;
       if (media >= 70) {
         color = '#6fcf97';
-        setPill('pill-ver', 'pill-text-ver', 'ok', 'Aprovado — parabéns!');
-      } else if (media >= 55) {
+        setPill('pill-ver','pill-text-ver','ok','Aprovado — parabéns!');
+      } else if (media >= 30) {
         color = 'var(--gold-light)';
-        setPill('pill-ver', 'pill-text-ver', 'warn', `Reprovado — faltaram ${(70 - media).toFixed(1)} pontos`);
+        setPill('pill-ver','pill-text-ver','warn',`Vai para exame — média ${mediar.toFixed(1)} (mín. 30 para exame)`);
       } else {
         color = '#ff8a7a';
-        setPill('pill-ver', 'pill-text-ver', 'danger', `Reprovado — faltaram ${(70 - media).toFixed(1)} pontos`);
+        setPill('pill-ver','pill-text-ver','danger',`Reprovado direto — média abaixo de 30`);
       }
 
-      fill.style.width  = '0%';
+      fill.style.width = '0%';
       fill.style.background = color;
-      setTimeout(() => fill.style.width = pct + '%', 50);
+      setTimeout(() => fill.style.width = Math.min(100, Math.max(0, media)) + '%', 50);
 
       document.getElementById('formula-ver').innerHTML =
         `<strong>Fórmula:</strong>&nbsp; (N₁ × 2 + N₂ × 3) ÷ 5<br>` +
         `<strong>Cálculo:</strong>&nbsp; (${n1} × 2 + ${n2} × 3) ÷ 5<br>` +
         `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= <strong>${mediar.toFixed(1)}</strong>`;
 
-      const box = document.getElementById('result-ver');
-      box.style.display = 'block';
-      box.style.animation = 'none';
-      void box.offsetWidth;
-      box.style.animation = 'rise 0.4s cubic-bezier(0.16, 1, 0.3, 1) both';
+      animateBox('result-ver');
+    }
+
+    /* ── Tab 3: Exame Final ── */
+    function calcExame() {
+      const mf  = parseFloat(document.getElementById('mf-exame').value);
+      const neRaw = document.getElementById('ne-exame').value.trim();
+      const temExame = neRaw !== '';
+      const ne  = temExame ? parseFloat(neRaw) : NaN;
+
+      if (isNaN(mf) || mf < 30 || mf > 69.9) {
+        showError('err-exame', 'Média bimestral deve ser entre 30 e 69,9 para ir ao exame.');
+        return;
+      }
+      if (temExame && (isNaN(ne) || ne < 0 || ne > 100)) {
+        showError('err-exame', 'Nota do exame deve ser entre 0 e 100.');
+        return;
+      }
+
+      // Nota mínima no exame para atingir 50
+      // (mf * 3 + ne * 2) / 5 = 50  →  ne = (50*5 - mf*3) / 2
+      const minExame  = ((50 * 5) - (mf * 3)) / 2;
+      const minExamer = Math.round(minExame * 10) / 10;
+
+      document.getElementById('val-exame-nec').textContent =
+        minExame > 100 ? '∞' : minExame <= 0 ? '0' : minExamer.toFixed(1);
+
+      if (minExame > 100)     setPill('pill-exame-nec','pill-text-exame-nec','danger','Aprovação impossível — nota exigida acima de 100');
+      else if (minExame <= 0) setPill('pill-exame-nec','pill-text-exame-nec','ok','Aprovação já garantida com qualquer nota!');
+      else if (minExame >= 80)setPill('pill-exame-nec','pill-text-exame-nec','warn','Atenção — nota exigida muito alta');
+      else                    setPill('pill-exame-nec','pill-text-exame-nec','ok','Meta alcançável no exame');
+
+      // Bloco de simulação
+      const finalBlock = document.getElementById('exame-final-block');
+      if (temExame) {
+        const notaFinal  = (mf * 3 + ne * 2) / 5;
+        const notaFinalr = Math.round(notaFinal * 10) / 10;
+
+        document.getElementById('val-col-exame').textContent = ne.toFixed(1);
+        document.getElementById('val-col-final').textContent  = notaFinalr.toFixed(1);
+
+        const fillE = document.getElementById('progress-fill-exame');
+        let colorE;
+        if (notaFinal >= 50) {
+          colorE = '#6fcf97';
+          setPill('pill-exame-final','pill-text-exame-final','ok','Aprovado no exame — parabéns!');
+        } else {
+          colorE = '#ff8a7a';
+          setPill('pill-exame-final','pill-text-exame-final','danger',`Reprovado — faltaram ${(50 - notaFinal).toFixed(1)} pontos`);
+        }
+
+        fillE.style.width = '0%';
+        fillE.style.background = colorE;
+        setTimeout(() => fillE.style.width = Math.min(100, Math.max(0, notaFinal)) + '%', 80);
+
+        finalBlock.style.display = 'block';
+
+        document.getElementById('formula-exame').innerHTML =
+          `<strong>Nota necessária:</strong>&nbsp; (${mf} × 3 + X × 2) ÷ 5 = 50<br>` +
+          `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; X = <strong>${minExame > 100 ? 'impossível' : minExame <= 0 ? '≤ 0' : minExamer.toFixed(1)}</strong><br><br>` +
+          `<strong>Sua nota final:</strong>&nbsp; (${mf} × 3 + ${ne} × 2) ÷ 5<br>` +
+          `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= <strong>${notaFinalr.toFixed(1)}</strong>`;
+      } else {
+        finalBlock.style.display = 'none';
+        document.getElementById('formula-exame').innerHTML =
+          `<strong>Fórmula:</strong>&nbsp; (Média × 3 + Exame × 2) ÷ 5 ≥ 50<br>` +
+          `<strong>Cálculo:</strong>&nbsp; ((50 × 5) − (${mf} × 3)) ÷ 2<br>` +
+          `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= <strong>${minExame > 100 ? 'impossível' : minExame <= 0 ? '≤ 0' : minExamer.toFixed(1)}</strong>`;
+      }
+
+      animateBox('result-exame');
     }
 
     // Enter key support
     document.querySelectorAll('input').forEach(inp => {
       inp.addEventListener('keydown', e => {
         if (e.key === 'Enter') {
-          const panel = inp.closest('.panel');
-          panel.querySelector('.btn-primary').click();
+          inp.closest('.panel').querySelector('.btn-primary').click();
         }
       });
     });
