@@ -16,18 +16,18 @@
     }
 
     :root {
-      --red-deep:    #0f0202;
-      --red-dark:    #1a0404;
-      --red-mid:     #6b0f0f;
-      --red-accent:  #c0392b;
-      --red-bright:  #e74c3c;
-      --red-glow:    #ff6b5b;
-      --gold:        #c9a84c;
-      --gold-light:  #f0d080;
+      --blue-deep:   #04051a;
+      --blue-dark:   #090b2e;
+      --blue-mid:    #1a1870;
+      --blue-accent: #2b28a0;
+      --blue-bright: #3f3dd4;
+      --blue-glow:   #6e6cff;
+      --yellow:      #f5c200;
+      --yellow-light:#ffe566;
       --white:       #ffffff;
-      --off-white:   #f5ede8;
-      --muted:       rgba(245, 225, 215, 0.55);
-      --border:      rgba(201, 168, 76, 0.18);
+      --off-white:   #eff0ff;
+      --muted:       rgba(220, 220, 255, 0.52);
+      --border:      rgba(245, 194, 0, 0.2);
       --glass-bg:    rgba(255, 255, 255, 0.04);
       --glass-hover: rgba(255, 255, 255, 0.07);
     }
@@ -38,11 +38,11 @@
 
     body {
       min-height: 100vh;
-      background-color: var(--red-deep);
+      background-color: var(--blue-deep);
       background-image:
-        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(107, 15, 15, 0.7) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 40% at 80% 80%, rgba(192, 57, 43, 0.12) 0%, transparent 60%),
-        radial-gradient(ellipse 30% 30% at 20% 70%, rgba(201, 168, 76, 0.06) 0%, transparent 60%);
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(26, 24, 112, 0.75) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 80% 80%, rgba(43, 40, 160, 0.15) 0%, transparent 60%),
+        radial-gradient(ellipse 30% 30% at 20% 70%, rgba(245, 194, 0, 0.05) 0%, transparent 60%);
       font-family: 'DM Sans', sans-serif;
       color: var(--off-white);
       display: flex;
@@ -64,17 +64,17 @@
     .ornament-line {
       width: 60px;
       height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold));
+      background: linear-gradient(90deg, transparent, var(--yellow));
     }
 
     .ornament-line.right {
-      background: linear-gradient(90deg, var(--gold), transparent);
+      background: linear-gradient(90deg, var(--yellow), transparent);
     }
 
     .ornament-diamond {
       width: 6px;
       height: 6px;
-      border: 1px solid var(--gold);
+      border: 1px solid var(--yellow);
       transform: rotate(45deg);
     }
 
@@ -90,7 +90,7 @@
       font-weight: 500;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: var(--yellow);
       margin-bottom: 14px;
     }
 
@@ -105,7 +105,7 @@
 
     h1 em {
       font-style: italic;
-      color: var(--gold-light);
+      color: var(--yellow-light);
     }
 
     .subtitle-block {
@@ -133,7 +133,7 @@
     }
 
     .weight-badge span {
-      color: var(--gold-light);
+      color: var(--yellow-light);
       font-weight: 500;
     }
 
@@ -163,9 +163,9 @@
     }
 
     .tab.active {
-      background: rgba(192, 57, 43, 0.5);
+      background: rgba(43, 40, 160, 0.65);
       color: var(--off-white);
-      box-shadow: 0 0 0 0.5px rgba(231, 76, 60, 0.4) inset;
+      box-shadow: 0 0 0 0.5px rgba(111, 108, 255, 0.45) inset;
     }
 
     .tab:hover:not(.active) {
@@ -189,7 +189,7 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.4), transparent);
+      background: linear-gradient(90deg, transparent, rgba(245, 194, 0, 0.4), transparent);
     }
 
     /* ─── Input group ─── */
@@ -216,9 +216,9 @@
       font-size: 10px;
       font-weight: 500;
       letter-spacing: 0.08em;
-      color: var(--gold);
-      background: rgba(201, 168, 76, 0.1);
-      border: 0.5px solid rgba(201, 168, 76, 0.25);
+      color: var(--yellow);
+      background: rgba(245, 194, 0, 0.1);
+      border: 0.5px solid rgba(245, 194, 0, 0.28);
       padding: 2px 8px;
       border-radius: 4px;
     }
@@ -248,9 +248,9 @@
     }
 
     input[type="number"]:focus {
-      border-color: rgba(201, 168, 76, 0.45);
+      border-color: rgba(245, 194, 0, 0.5);
       background: rgba(255,255,255,0.07);
-      box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.06);
+      box-shadow: 0 0 0 3px rgba(245, 194, 0, 0.07);
     }
 
     .divider {
@@ -276,8 +276,8 @@
     .btn-primary {
       width: 100%;
       padding: 16px;
-      background: linear-gradient(135deg, var(--red-accent) 0%, #8b1a1a 100%);
-      border: 0.5px solid rgba(231, 76, 60, 0.4);
+      background: linear-gradient(135deg, var(--blue-accent) 0%, #110f5a 100%);
+      border: 0.5px solid rgba(111, 108, 255, 0.4);
       border-radius: 10px;
       color: var(--white);
       font-family: 'DM Sans', sans-serif;
@@ -302,8 +302,8 @@
 
     .btn-primary:hover {
       transform: translateY(-1px);
-      box-shadow: 0 8px 24px rgba(192, 57, 43, 0.35);
-      border-color: rgba(231, 76, 60, 0.6);
+      box-shadow: 0 8px 24px rgba(43, 40, 160, 0.45);
+      border-color: rgba(111, 108, 255, 0.6);
     }
 
     .btn-primary:hover::after { left: 100%; }
@@ -341,7 +341,7 @@
       font-size: 4.5rem;
       font-weight: 300;
       line-height: 1;
-      color: var(--white);
+      color: var(--yellow-light);
       margin-bottom: 6px;
       letter-spacing: -0.02em;
     }
@@ -370,15 +370,15 @@
     }
 
     .status-pill.warn {
-      background: rgba(201, 168, 76, 0.1);
-      border: 0.5px solid rgba(201, 168, 76, 0.28);
-      color: var(--gold-light);
+      background: rgba(245, 194, 0, 0.1);
+      border: 0.5px solid rgba(245, 194, 0, 0.28);
+      color: var(--yellow-light);
     }
 
     .status-pill.danger {
-      background: rgba(192, 57, 43, 0.12);
-      border: 0.5px solid rgba(192, 57, 43, 0.3);
-      color: #ff8a7a;
+      background: rgba(63, 61, 212, 0.12);
+      border: 0.5px solid rgba(110, 108, 255, 0.3);
+      color: #a09fff;
     }
 
     .dot {
@@ -388,8 +388,8 @@
     }
 
     .ok .dot    { background: #6fcf97; }
-    .warn .dot  { background: var(--gold-light); }
-    .danger .dot{ background: #ff8a7a; }
+    .warn .dot  { background: var(--yellow-light); }
+    .danger .dot{ background: #a09fff; }
 
     .formula-block {
       padding: 16px 20px;
@@ -493,13 +493,13 @@
     .footer-line {
       width: 40px;
       height: 0.5px;
-      background: var(--gold);
+      background: var(--yellow);
     }
 
     .footer-dot {
       width: 4px; height: 4px;
       border-radius: 50%;
-      background: var(--gold);
+      background: var(--yellow);
     }
 
     .footer p {
@@ -514,8 +514,8 @@
       align-items: flex-start;
       gap: 12px;
       padding: 14px 16px;
-      background: rgba(201, 168, 76, 0.07);
-      border: 0.5px solid rgba(201, 168, 76, 0.22);
+      background: rgba(245, 194, 0, 0.06);
+      border: 0.5px solid rgba(245, 194, 0, 0.22);
       border-radius: 10px;
       margin-bottom: 26px;
     }
@@ -528,12 +528,12 @@
 
     .info-text {
       font-size: 12.5px;
-      color: rgba(240, 208, 128, 0.75);
+      color: rgba(255, 235, 120, 0.72);
       line-height: 1.65;
     }
 
     .info-text strong {
-      color: var(--gold-light);
+      color: var(--yellow-light);
       font-weight: 500;
     }
 
@@ -592,7 +592,7 @@
     }
 
     .result-mini-val.highlight {
-      color: var(--gold-light);
+      color: var(--yellow-light);
     }
 
     /* ─── Responsive ─── */
@@ -750,7 +750,7 @@
 
       <div class="input-row">
         <label for="mf-exame">
-          Sua Média Final Bimestral (USE: VER MINHA MÉDIA)
+          Sua Média Final Bimestral
           <span class="label-tag">PESO 3</span>
         </label>
         <input
@@ -840,7 +840,7 @@
       <div class="footer-dot"></div>
       <div class="footer-line"></div>
     </div>
-    <p>Média bimestral mínima: <strong style="color:rgba(245,225,215,0.55)">70 pts</strong> &nbsp;|&nbsp; Nota final mínima (exame): <strong style="color:rgba(245,225,215,0.55)">50 pts</strong></p>
+    <p>Média bimestral mínima: <strong style="color:rgba(255,229,102,0.6)">70 pts</strong> &nbsp;|&nbsp; Nota final mínima (exame): <strong style="color:rgba(255,229,102,0.6)">50 pts</strong></p>
   </footer>
 
   <script>
@@ -925,10 +925,10 @@
         color = '#6fcf97';
         setPill('pill-ver','pill-text-ver','ok','Aprovado — parabéns!');
       } else if (media >= 30) {
-        color = 'var(--gold-light)';
+        color = '#f5c200';
         setPill('pill-ver','pill-text-ver','warn',`Vai para exame — média ${mediar.toFixed(1)} (mín. 30 para exame)`);
       } else {
-        color = '#ff8a7a';
+        color = '#a09fff';
         setPill('pill-ver','pill-text-ver','danger',`Reprovado direto — média abaixo de 30`);
       }
 
@@ -988,7 +988,7 @@
           colorE = '#6fcf97';
           setPill('pill-exame-final','pill-text-exame-final','ok','Aprovado no exame — parabéns!');
         } else {
-          colorE = '#ff8a7a';
+          colorE = '#a09fff';
           setPill('pill-exame-final','pill-text-exame-final','danger',`Reprovado — faltaram ${(50 - notaFinal).toFixed(1)} pontos`);
         }
 
