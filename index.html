@@ -743,21 +743,21 @@
         <span class="info-icon">⚠</span>
         <p class="info-text">
           O Exame Final é para quem ficou com média entre
-          <strong>30 e 69,9 pontos</strong>.<br>
+          <strong>35 e 69,9 pontos</strong>.<br>
           Nota Final mínima para aprovação: <strong>50 pontos</strong>.
         </p>
       </div>
 
       <div class="input-row">
         <label for="mf-exame">
-          Sua Média Final Bimestral
+          Sua Média Semestral
           <span class="label-tag">PESO 3</span>
         </label>
         <input
           type="number"
           id="mf-exame"
-          placeholder="30 – 69,9"
-          min="30" max="69.9" step="0.1"
+          placeholder="35 – 69,9"
+          min="35" max="69.9" step="0.1"
         >
       </div>
 
@@ -835,13 +835,23 @@
   </div>
 
   <footer class="footer">
-    <div class="footer-ornament">
-      <div class="footer-line"></div>
-      <div class="footer-dot"></div>
-      <div class="footer-line"></div>
-    </div>
-    <p>Média bimestral mínima: <strong style="color:rgba(255,229,102,0.6)">70 pts</strong> &nbsp;|&nbsp; Nota final mínima (exame): <strong style="color:rgba(255,229,102,0.6)">50 pts</strong></p>
-  </footer>
+  <div class="footer-ornament">
+    <div class="footer-line"></div>
+    <div class="footer-dot"></div>
+    <div class="footer-line"></div>
+  </div>
+
+  <p>
+    Aprovação direta:
+    <strong style="color:rgba(255,229,102,0.6)">70 pts</strong>
+    &nbsp;|&nbsp;
+    Exame Final:
+    <strong style="color:rgba(255,229,102,0.6)">35–69,9 pts</strong>
+    &nbsp;|&nbsp;
+    Nota final mínima:
+    <strong style="color:rgba(255,229,102,0.6)">50 pts</strong>
+  </p>
+</footer>
 
   <script>
     const TABS = ['calcular', 'ver', 'exame'];
@@ -924,12 +934,12 @@
       if (media >= 70) {
         color = '#6fcf97';
         setPill('pill-ver','pill-text-ver','ok','Aprovado — parabéns!');
-      } else if (media >= 30) {
+      } else if (media >= 35) {
         color = '#f5c200';
-        setPill('pill-ver','pill-text-ver','warn',`Vai para exame — média ${mediar.toFixed(1)} (mín. 30 para exame)`);
+        setPill('pill-ver','pill-text-ver','warn',`Vai para exame — média ${mediar.toFixed(1)} (mín. 35 para exame)`);
       } else {
         color = '#a09fff';
-        setPill('pill-ver','pill-text-ver','danger',`Reprovado direto — média abaixo de 30`);
+        setPill('pill-ver','pill-text-ver','danger',`Reprovado direto — média abaixo de 35`);
       }
 
       fill.style.width = '0%';
@@ -951,8 +961,8 @@
       const temExame = neRaw !== '';
       const ne  = temExame ? parseFloat(neRaw) : NaN;
 
-      if (isNaN(mf) || mf < 30 || mf > 69.9) {
-        showError('err-exame', 'Média bimestral deve ser entre 30 e 69,9 para ir ao exame.');
+      if (isNaN(mf) || mf < 35 || mf > 69.9) {
+        showError('err-exame', 'Média bimestral deve ser entre 35 e 69,9 para ir ao exame.');
         return;
       }
       if (temExame && (isNaN(ne) || ne < 0 || ne > 100)) {
